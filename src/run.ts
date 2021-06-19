@@ -11,9 +11,11 @@ export default async (app: Application) => {
     logger.info("connected to db")
   } catch (error) {
     logger.error("failed to connect to db", error)
-    return;
+    return -1;
   }
   app.listen(PORT, () => {
     logger.info('listening on port ' + PORT)
   });
+
+  return 0
 }
