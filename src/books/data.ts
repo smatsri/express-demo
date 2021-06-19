@@ -1,25 +1,26 @@
+import config from "config"
 import { ConnectionPool } from 'mssql'
+import logging from "../logging"
 import { Book } from "./models"
 
-import config from "config"
-
-const dbConfig = config.get<any>("Books.db")
-
-console.log(dbConfig);
 
 
-const pool = new ConnectionPool(dbConfig)
+const pool = new ConnectionPool(config.get<any>("Books.db"))
 
 export const connect = async () => {
   try {
     await pool.connect()
-
+    logging.info("connected to db")
   } catch (error) {
-    console.log("failed to connect", error);
+    logging.error("failed to connect to database", error);
   }
 }
 
 export const getById = async (id: number): Promise<Book> => {
-  const result = await pool.query<Book>`select id,title,releaseDate from [Books] where id = ${id}`
+  const result = await pool.query<Book>`
+    select id,title,releaseDate 
+    from [Books] 
+    where id = ${id}
+  `
   return result.recordset[0];
 }

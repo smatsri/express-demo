@@ -1,20 +1,16 @@
-import { argv } from "yargs";
 import express from "express";
 
 import booksRouter from "./books/router"
-import { connect } from "./books/data";
+import globalErrorHandler from "./globalErrorHandler";
+import run from "./run";
 
 const app = express();
 
 app.use('/api/books', booksRouter)
+app.use('/throw', (r,s) => {
+  throw new Error("test error")
+})
 
-const PORT = process.env.PORT || argv["port"] || 1234
+app.use(globalErrorHandler)
 
-const run = async () => {
-  await connect();
-  app.listen(PORT, () => {
-    console.log('listening on port ' + PORT)
-  });
-}
-
-run();
+run(app);
