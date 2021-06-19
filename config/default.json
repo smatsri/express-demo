@@ -1,0 +1,13 @@
+{
+  "Books": {
+    "db": {
+      "user": "dev",
+      "password": "123456",
+      "server": "localhost",
+      "database": "BooksStore",
+      "options": {
+        "trustServerCertificate": true
+      }
+    }
+  }
+}
