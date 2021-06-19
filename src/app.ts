@@ -8,8 +8,7 @@ const app = express();
 
 app.use('/api/books', booksRouter)
 
-const PORT = argv["port"] || 80
-
+const PORT = process.env.PORT || argv["port"] || 1234
 
 const run = async () => {
   await connect();
